@@ -1,0 +1,41 @@
+# Docker-specific configuration for Spring Boot
+# This file is activated when SPRING_PROFILES_ACTIVE=docker
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://database:5432/sti_db
+    username: sti_user
+    password: sti_password
+    driver-class-name: org.postgresql.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: false
+    
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Logging configuration
+logging:
+  level:
+    com.example.sti: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# CORS configuration for frontend
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
